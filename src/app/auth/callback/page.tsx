@@ -7,18 +7,47 @@ export default function CallbackPage() {
   useEffect(() => {
     const supabase = createClient()
 
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        window.location.href = '/home'
-      }
-    })
+    async function handleCallback() {
+      // Get hash params (magic link puts tokens in hash)
+      const hash = window.location.hash
+      const params = new URLSearchParams(hash.replace('#', '?').replace('#', ''))
 
-    // Also check if already signed in
-    supabase.auth.getSession().then(({ data: { session } }) => {
+      const access_token = params.get('access_token')
+      const refresh_token = params.get('refresh_token')
+
+      if (access_token && refresh_token) {
+        const { error } = await supabase.auth.setSession({ access_token, refresh_token })
+        if (!error) {
+          window.location.href = '/home'
+          return
+        }
+      }
+
+      // Also check query params (token_hash flow)
+      const urlParams = new URLSearchParams(window.location.search)
+      const token_hash = urlParams.get('token_hash')
+      const type = urlParams.get('type')
+
+      if (token_hash && type) {
+        const { error } = await supabase.auth.verifyOtp({ token_hash, type: type as any })
+        if (!error) {
+          window.location.href = '/home'
+          return
+        }
+      }
+
+      // Check if already signed in
+      const { data: { session } } = await supabase.auth.getSession()
       if (session) {
         window.location.href = '/home'
+        return
       }
-    })
+
+      // Nothing worked — go back to login
+      window.location.href = '/auth/login?error=auth_failed'
+    }
+
+    handleCallback()
   }, [])
 
   return (
