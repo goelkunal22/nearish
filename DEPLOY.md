@@ -15,7 +15,7 @@
 8. Go to **Project Settings → API**
 9. Copy your **Project URL** and **anon public key** — you'll need these next. (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXZtanVwb2RtZXJqbnRqdWJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MDY1NTYsImV4cCI6MjA4OTI4MjU1Nn0.bXQN6Ymmw1Z5e9KsR5KqS6sdY-1wWCZGxUzIFx5ynf0)
 sb_publishable_Tcj9AMFnLxxyLMCp8U3Ciw_t8YS6SpC
-
+https://dfivmjupodmerjntjubw.supabase.co
 ---cat > .env.local << 'EOF'
 NEXT_PUBLIC_SUPABASE_URL=sb_publishable_Tcj9AMFnLxxyLMCp8U3Ciw_t8YS6SpC
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXZtanVwb2RtZXJqbnRqdWJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MDY1NTYsImV4cCI6MjA4OTI4MjU1Nn0.bXQN6Ymmw1Z5e9KsR5KqS6sdY-1wWCZGxUzIFx5ynf0
