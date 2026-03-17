@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get('next') ?? '/home'
 
   if (code) {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
           getAll() { return cookieStore.getAll() },
           setAll(cookiesToSet: { name: string; value: string; options?: object }[]) {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieStore.set(name, value, options as any)
             )
           },
         },
@@ -33,3 +33,11 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.redirect(`${origin}/auth/login?error=auth_failed`)
 }
+```
+
+Save it, then push:
+```
+cd /Users/kunalgoel/Downloads/nearish
+git add .
+git commit -m "fix callback for nextjs 16"
+git push
