@@ -33,11 +33,3 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.redirect(`${origin}/auth/login?error=auth_failed`)
 }
-```
-
-Save it, then push:
-```
-cd /Users/kunalgoel/Downloads/nearish
-git add .
-git commit -m "fix callback for nextjs 16"
-git push
